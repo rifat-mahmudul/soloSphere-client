@@ -4,7 +4,7 @@ import { AuthContext } from "../../provider/AuthProvider"
 
 const Login = () => {
 
-    const {signInWithGoogle} = useContext(AuthContext);
+    const {signInWithGoogle, signInUser} = useContext(AuthContext);
 
     const handleGoogleSignIn = async () => {
         signInWithGoogle()
@@ -13,6 +13,22 @@ const Login = () => {
         })
         .catch(error => {
             console.log(`The Error form log in page : `, error);
+        })
+    };
+
+    const handleSignIn = e => {
+        e.preventDefault();
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        console.log(email, password);
+
+        signInUser(email, password)
+        .then(result => {
+            console.log(result.user)
+        })
+        .catch(error => {
+            console.log(`Error from log in : ${error}`)
         })
     }
 
@@ -75,7 +91,7 @@ const Login = () => {
     
                 <span className='w-1/5 border-b dark:border-gray-400 lg:w-1/4'></span>
                 </div>
-                <form>
+                <form onSubmit={handleSignIn}>
                 <div className='mt-4'>
                     <label
                     className='block mb-2 text-sm font-medium text-gray-600 '
