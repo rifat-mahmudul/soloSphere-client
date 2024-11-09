@@ -1,6 +1,21 @@
+import { useContext } from "react"
 import { Link } from "react-router-dom"
+import { AuthContext } from "../../provider/AuthProvider"
 
 const Login = () => {
+
+    const {signInWithGoogle} = useContext(AuthContext);
+
+    const handleGoogleSignIn = async () => {
+        signInWithGoogle()
+        .then(result => {
+            console.log(result.user);
+        })
+        .catch(error => {
+            console.log(`The Error form log in page : `, error);
+        })
+    }
+
     return (
         <div className='flex justify-center items-center min-h-[calc(100vh-306px)]'>
             <div className='flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg  lg:max-w-4xl '>
@@ -24,7 +39,7 @@ const Login = () => {
                 Welcome back!
                 </p>
     
-                <div className='flex cursor-pointer items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg   hover:bg-gray-50 '>
+                <button onClick={handleGoogleSignIn} className='flex cursor-pointer items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg   hover:bg-gray-50 '>
                 <div className='px-4 py-2'>
                     <svg className='w-6 h-6' viewBox='0 0 40 40'>
                     <path
@@ -49,7 +64,7 @@ const Login = () => {
                 <span className='w-5/6 px-4 py-3 font-bold text-center'>
                     Sign in with Google
                 </span>
-                </div>
+                </button>
     
                 <div className='flex items-center justify-between mt-4'>
                 <span className='w-1/5 border-b  lg:w-1/4'></span>

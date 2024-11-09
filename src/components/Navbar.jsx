@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import logo from '../assets/images/logo.png'
 import { AuthContext } from '../provider/AuthProvider'
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const Navbar = () => {
 
@@ -10,15 +10,15 @@ const Navbar = () => {
     return (
         <div className='navbar bg-base-100 shadow-sm container px-4 mx-auto'>
             <div className='flex-1'>
-            <div className='flex gap-2 items-center'>
+            <Link to='/' className='flex gap-2 items-center'>
                 <img className='w-auto h-7' src={logo} alt='' />
                 <span className='font-bold'>SoloSphere</span>
-            </div>
+            </Link>
             </div>
             <div className='flex-none'>
             <ul className='menu menu-horizontal px-1'>
                 <li>
-                <div>Home</div>
+                    <NavLink to='/'>Home</NavLink>
                 </li>
     
                 {
@@ -41,7 +41,7 @@ const Navbar = () => {
                         <img
                         referrerPolicy='no-referrer'
                         alt='User Profile Photo'
-                        src=''
+                        src={user?.photoURL}
                         />
                     </div>
                     </div>
