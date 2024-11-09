@@ -6,23 +6,24 @@ import Home from "../pages/Home";
 import Login from "../pages/Authentication/Login";
 import Register from "../pages/Authentication/Register";
 
-export const router = createBrowserRouter([
+export const router = createBrowserRouter(
+    [
+        {
+            path: "/",
+            element: <Root />,
+            children: [
+                { path: "/", element: <Home /> },
+                { path: "/login", element: <Login /> },
+                { path: "/register", element: <Register /> },
+            ],
+        },
+    ],
     {
-        path: "/",
-        element: <Root></Root>,
-        children : [
-            {
-                path : '/',
-                element : <Home></Home>
-            },
-            {
-                path : '/login',
-                element : <Login></Login>
-            },
-            {
-                path : '/register',
-                element : <Register></Register>
-            },
-        ]
-    },
-]);
+        future: {
+            v7_skipActionErrorRevalidation: true,
+        },
+    }
+);
+
+
+export default router;
