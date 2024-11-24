@@ -11,10 +11,10 @@ const JobDetails = () => {
 
     const job = useLoaderData();
 
-    const {title, category, deadline, description, min_price, email,_id} = job;
+    const {title, category, deadline, description, min_price, buyer ,_id} = job;
 
     const handleFormSubmit = e => {
-        if(user?.email === buyer_Email) return alert('Permission not allowed')
+        // if(user?.email === buyer_Email) return alert('Permission not allowed')
         e.preventDefault();
         const form = e.target;
         const jobId = _id;
@@ -22,11 +22,11 @@ const JobDetails = () => {
         const comment = form.comment.value;
         const deadline = startDate;
         const formEmail = user?.email;
-        const buyer_Email = email;
+        const buyer_Email = buyer.email;
         const status = "pending";
 
         const bidData = {
-            jobId, price, deadline, comment, title, category,status,buyer_Email, formEmail
+            jobId, price, deadline, comment, title, category, status, buyer_Email, formEmail
         };
 
         console.table(bidData);
@@ -72,7 +72,7 @@ const JobDetails = () => {
                 <div>
                     <p className='mt-2 text-sm  text-gray-600 '>Name: Jhankar Vai.</p>
                     <p className='mt-2 text-sm  text-gray-600 '>
-                    Email: jhankar@mahbub.com
+                    {buyer.email}
                     </p>
                 </div>
                 <div className='rounded-full object-cover overflow-hidden w-14 h-14'>
