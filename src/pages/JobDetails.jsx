@@ -10,23 +10,28 @@ const JobDetails = () => {
     const [startDate, setStartDate] = useState(new Date());
 
     const job = useLoaderData();
+    console.log(job)
 
-    const {title, category, deadline, description, min_price, buyer ,_id} = job;
+    const {job_title, category, deadline, description, min_price, buyer ,_id, max_price} = job;
 
     const handleFormSubmit = e => {
-        // if(user?.email === buyer_Email) return alert('Permission not allowed')
+        if(user?.email === buyer.email) return alert('Permission not allowed')
         e.preventDefault();
         const form = e.target;
         const jobId = _id;
         const price = parseFloat(form.price.value);
+        if(price < parseFloat(min_price)){
+            return alert('Offer more or at least equal to minimum price')
+        }
         const comment = form.comment.value;
         const deadline = startDate;
         const formEmail = user?.email;
         const buyer_Email = buyer.email;
+        const buyer_name = buyer.name;
         const status = "pending";
 
         const bidData = {
-            jobId, price, deadline, comment, title, category, status, buyer_Email, formEmail
+            jobId, price, deadline, comment, job_title, category, status, buyer_Email, formEmail,min_price, max_price,buyer_name
         };
 
         console.table(bidData);
@@ -50,7 +55,7 @@ const JobDetails = () => {
             <div className='flex-1  px-4 py-7 bg-white rounded-md shadow-md md:min-h-[350px]'>
             <div className='flex items-center justify-between'>
                 <span className='text-sm font-light text-gray-800 '>
-                Deadline: {deadline}
+                Deadline: {new Date(deadline).toLocaleDateString()}
                 </span>
                 <span className='px-4 py-1 text-xs text-blue-800 uppercase bg-blue-200 rounded-full '>
                 {category}
@@ -59,7 +64,7 @@ const JobDetails = () => {
     
             <div>
                 <h1 className='mt-2 text-3xl font-semibold text-gray-800 '>
-                {title}
+                {job_title}
                 </h1>
     
                 <p className='mt-2 text-lg text-gray-600 '>
@@ -70,7 +75,7 @@ const JobDetails = () => {
                 </p>
                 <div className='flex items-center gap-5'>
                 <div>
-                    <p className='mt-2 text-sm  text-gray-600 '>Name: Jhankar Vai.</p>
+                    <p className='mt-2 text-sm  text-gray-600 '>Name: {buyer.name}</p>
                     <p className='mt-2 text-sm  text-gray-600 '>
                     {buyer.email}
                     </p>
@@ -80,7 +85,7 @@ const JobDetails = () => {
                 </div>
                 </div>
                 <p className='mt-6 text-lg font-bold text-gray-600 '>
-                Range: $100 - ${min_price}
+                Range: ${min_price} - ${max_price}
                 </p>
             </div>
             </div>

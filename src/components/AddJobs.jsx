@@ -2,12 +2,15 @@ import { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { AuthContext } from "../provider/AuthProvider";
+import { useNavigate } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
 
 const AddJob = () => {
     const {user} = useContext(AuthContext);
     // const navigate = useNavigate();
     const [startDate, setStartDate] = useState(new Date());
+
+    const navigate = useNavigate();
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -44,8 +47,10 @@ const AddJob = () => {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data)
+            console.log(data);
+            navigate('/')
         })
+        form.reset();
     }
 
     return (
