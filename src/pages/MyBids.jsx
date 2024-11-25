@@ -12,7 +12,14 @@ const MyBids = () => {
         .then(res => {
             setBids(res.data);
         })
-    }, [user])
+    }, [user]);
+
+    const handleStatus = async (id, prevStatus, status) => {
+        if(prevStatus === status) return alert('Already Updated')
+        console.log(id, prevStatus, status);
+        const {data} = await axios.patch(`http://localhost:5000/bid/${id}`, {status})
+        console.log(data);
+    }
 
     return (
         
@@ -109,6 +116,7 @@ const MyBids = () => {
                                     </td>
                                     <td className='px-4 py-4 text-sm whitespace-nowrap'>
                                         <button
+                                        onClick={() => handleStatus(bid._id, bid.status, "Complete")}
                                         title='Mark Complete'
                                         className='text-gray-500 transition-colors duration-200   hover:text-red-500 focus:outline-none disabled:cursor-not-allowed'
                                         >
