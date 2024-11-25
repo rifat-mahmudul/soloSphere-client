@@ -12,7 +12,14 @@ const BidRequests = () => {
         .then(res => {
             setReq(res.data);
         })
-    }, [user])
+    }, [user]);
+
+    const handleStatus = async (id, prevStatus, status) => {
+        if(prevStatus === status) return alert('Already Updated')
+        console.log(id, prevStatus, status);
+        const {data} = await axios.patch(`http://localhost:5000/bid/${id}`, {status})
+        console.log(data);
+    }
 
     return (
         <section className='container px-4 mx-auto pt-12 max-w-[90%] xl:max-w-[1200px]'>
@@ -114,12 +121,14 @@ const BidRequests = () => {
                                     <td className='px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap'>
                                         <div className='inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-yellow-100/60 text-yellow-500'>
                                         <span className='h-1.5 w-1.5 rounded-full bg-yellow-500'></span>
-                                        <h2 className='text-sm font-normal '>Pending</h2>
+                                        <h2 className='text-sm font-normal '>{r.status}</h2>
                                         </div>
                                     </td>
                                     <td className='px-4 py-4 text-sm whitespace-nowrap'>
                                         <div className='flex items-center gap-x-6'>
-                                        <button className='text-gray-500 transition-colors duration-200   hover:text-red-500 focus:outline-none'>
+                                        <button 
+                                        onClick={() => handleStatus(r._id, r.status, "In Progress")}
+                                        className='text-gray-500 transition-colors duration-200   hover:text-red-500 focus:outline-none'>
                                             <svg
                                             xmlns='http://www.w3.org/2000/svg'
                                             fill='none'
@@ -136,7 +145,9 @@ const BidRequests = () => {
                                             </svg>
                                         </button>
                 
-                                        <button className='text-gray-500 transition-colors duration-200   hover:text-yellow-500 focus:outline-none'>
+                                        <button 
+                                        onClick={() => handleStatus(r._id, r.status, "Rejected")}
+                                        className='text-gray-500 transition-colors duration-200   hover:text-yellow-500 focus:outline-none'>
                                             <svg
                                             xmlns='http://www.w3.org/2000/svg'
                                             fill='none'
