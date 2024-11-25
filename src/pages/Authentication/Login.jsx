@@ -1,6 +1,7 @@
 import { useContext } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { AuthContext } from "../../provider/AuthProvider"
+import axios from 'axios'
 
 const Login = () => {
 
@@ -15,6 +16,10 @@ const Login = () => {
         .then(result => {
             console.log(result.user);
             navigate(from);
+            axios.post('http://localhost:5000/jwt', {email : result?.user.email}, {withCredentials : true})
+            .then(res => {
+                console.log(res.data);
+            })
         })
         .catch(error => {
             console.log(`The Error form log in page : `, error);
@@ -32,6 +37,10 @@ const Login = () => {
         .then(result => {
             console.log(result.user);
             navigate(from);
+            axios.post('http://localhost:5000/jwt', {email : result?.user.email})
+            .then(res => {
+                console.log(res.data.token);
+            })
         })
         .catch(error => {
             console.log(`Error from log in : ${error}`)

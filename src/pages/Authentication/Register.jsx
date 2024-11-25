@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { AuthContext } from "../../provider/AuthProvider"
 import { updateProfile } from "firebase/auth";
 import { auth } from "../../firebase/firebase.config";
+import axios from "axios";
 
 const Register = () => {
 
@@ -26,6 +27,10 @@ const Register = () => {
                 
             });
             console.log(result.user);
+            axios.post('http://localhost:5000/jwt', {email : result?.user.email}, {withCredentials : true})
+            .then(res => {
+                console.log(res.data);
+            })
         })
 
         console.log(email, password);
