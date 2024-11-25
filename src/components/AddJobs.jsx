@@ -48,7 +48,7 @@ const AddJob = () => {
         .then(res => res.json())
         .then(data => {
             console.log(data);
-            navigate('/')
+            navigate('/my-posted-jobs')
         })
         form.reset();
     }

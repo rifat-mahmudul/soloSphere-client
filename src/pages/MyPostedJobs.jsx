@@ -10,12 +10,10 @@ const MyPostedJobs = () => {
     useEffect(() => {
         axios(`http://localhost:5000/jobs/${user?.email}`)
         .then(res => {
-            setJobs(res.data)
+            setJobs(res.data);
         })
     }, [user])
 
-    console.log(user)
-    console.log(jobs)
 
 
     return (
@@ -86,7 +84,7 @@ const MyPostedJobs = () => {
                                         {job.job_title}
                                     </td>
                                     <td className='px-4 py-4 text-sm text-gray-500 whitespace-nowrap'>
-                                        {job.deadline}
+                                        {new Date(job.deadline).toLocaleDateString()}
                                     </td>
                                     <td className='px-4 py-4 text-sm text-gray-500 whitespace-nowrap'>
                                         ${job.min_price} - ${job.max_price}

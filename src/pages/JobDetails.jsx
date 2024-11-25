@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useLoaderData } from "react-router-dom"
+import { useLoaderData, useNavigate } from "react-router-dom"
 import { AuthContext } from "../provider/AuthProvider";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -10,7 +10,7 @@ const JobDetails = () => {
     const [startDate, setStartDate] = useState(new Date());
 
     const job = useLoaderData();
-    console.log(job)
+    const navigate = useNavigate();
 
     const {job_title, category, deadline, description, min_price, buyer ,_id, max_price} = job;
 
@@ -45,7 +45,8 @@ const JobDetails = () => {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data)
+            console.log(data);
+            navigate('/my-bids')
         })
     }
 
