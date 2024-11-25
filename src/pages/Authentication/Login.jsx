@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { AuthContext } from "../../provider/AuthProvider"
 
 const Login = () => {
@@ -7,11 +7,14 @@ const Login = () => {
     const {signInWithGoogle, signInUser} = useContext(AuthContext);
 
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state || '/';
 
     const handleGoogleSignIn = async () => {
         signInWithGoogle()
         .then(result => {
             console.log(result.user);
+            navigate(from);
         })
         .catch(error => {
             console.log(`The Error form log in page : `, error);
@@ -28,7 +31,7 @@ const Login = () => {
         signInUser(email, password)
         .then(result => {
             console.log(result.user);
-            navigate('/');
+            navigate(from);
         })
         .catch(error => {
             console.log(`Error from log in : ${error}`)

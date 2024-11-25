@@ -8,38 +8,45 @@ import Register from "../pages/Authentication/Register";
 import JobDetails from "../pages/JobDetails";
 import AddJobs from "../components/AddJobs";
 import MyPostedJobs from "../pages/MyPostedJobs";
+import PrivateRoutes from "./PrivateRoutes";
 
 export const router = createBrowserRouter(
     [
+        {
+            path: "/",
+            element: <Root></Root>,
+            children: [
+                {
+                    path: '/',
+                    element: <Home></Home>,
+                },
+                {
+                    path: '/login',
+                    element: <Login></Login>
+                },
+                {
+                    path: '/register',
+                    element: <Register></Register>
+                },
+                {
+                    path: '/job/:id',
+                    element: <PrivateRoutes><JobDetails></JobDetails></PrivateRoutes>,
+                    loader: ({ params }) => fetch(`http://localhost:5000/job/${params.id}`)
+                },
+                {
+                    path: "/add-job",
+                    element: <PrivateRoutes><AddJobs></AddJobs></PrivateRoutes>
+                },
+                {
+                    path: 'my-posted-jobs',
+                    element: <PrivateRoutes><MyPostedJobs></MyPostedJobs></PrivateRoutes>
+                }
+            ]
+        },
+    ],
     {
-        path: "/",
-        element: <Root></Root>,
-        children : [
-            {
-                path : '/',
-                element : <Home></Home>,
-            },
-            {
-                path : '/login',
-                element : <Login></Login>
-            },
-            {
-                path : '/register',
-                element : <Register></Register>
-            },
-            {
-                path : '/job/:id',
-                element : <JobDetails></JobDetails>,
-                loader : ({params}) => fetch(`http://localhost:5000/job/${params.id}`)
-            },
-            {
-                path : "/add-job",
-                element : <AddJobs></AddJobs>
-            },
-            {
-                path :'my-posted-jobs',
-                element : <MyPostedJobs></MyPostedJobs>
-            }
-        ]
-    },
-]);
+        future: {
+            v7_fetcherPersist: true,
+        },
+    }
+);
