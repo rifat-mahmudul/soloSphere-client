@@ -8,7 +8,7 @@ const MyPostedJobs = () => {
     const [jobs, setJobs] = useState([]);
 
     useEffect(() => {
-        axios(`http://localhost:5000/jobs/${user?.email}`)
+        axios(`http://localhost:5000/jobs/${user?.email}`, {withCredentials : true})
         .then(res => {
             setJobs(res.data);
         })

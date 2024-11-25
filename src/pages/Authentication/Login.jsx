@@ -14,7 +14,6 @@ const Login = () => {
     const handleGoogleSignIn = async () => {
         signInWithGoogle()
         .then(result => {
-            console.log(result.user);
             navigate(from);
             axios.post('http://localhost:5000/jwt', {email : result?.user.email}, {withCredentials : true})
             .then(res => {
