@@ -31,9 +31,6 @@ const AuthProvider = ({children}) => {
     const logOut = () => {
         setLoading(true)
         axios('http://localhost:5000/logout', {withCredentials : true})
-        .then(res => {
-            console.log(res.data);
-        })
         return signOut(auth);
     };
 
