@@ -28,6 +28,9 @@ const Navbar = () => {
                 <li>
                     <NavLink to='/'>Home</NavLink>
                 </li>
+                <li>
+                    <NavLink className='ml-5 mr-5' to='/All-Jobs'>AllJobs</NavLink>
+                </li>
     
                 {
                     !user && 
