@@ -13,6 +13,7 @@ const AllJobs = () => {
 
     const [jobs, setJobs] = useState([]);
     const [filter, setFilter] = useState('');
+    const [sort, setSort] = useState('');
 
 
 
@@ -22,11 +23,11 @@ const AllJobs = () => {
 
     useEffect(() => {
         const getData = async () => {
-            const {data} = await axios(`http://localhost:5000/all-jobs?page=${currentPage}&size=${itemsPerPage}&filter=${filter}`)
+            const {data} = await axios(`http://localhost:5000/all-jobs?page=${currentPage}&size=${itemsPerPage}&filter=${filter}&sort=${sort}`)
             setJobs(data)
         }
         getData();
-    }, [currentPage, itemsPerPage, filter])
+    }, [currentPage, itemsPerPage, filter, sort])
 
     useEffect(() => {
         const getCount = async () => {
@@ -72,8 +73,10 @@ const AllJobs = () => {
             </form>
             <div>
                 <select
-                name='category'
-                id='category'
+                onChange={e => setSort(e.target.value)}
+                value={sort}
+                name='sort'
+                id='sort'
                 className='border p-4 rounded-md'
                 >
                 <option value=''>Sort By Deadline</option>
