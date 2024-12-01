@@ -1,11 +1,10 @@
-import { useContext } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
-import { AuthContext } from "../../provider/AuthProvider"
 import axios from 'axios'
+import useAuth from "../../Hooks/useAuth"
 
 const Login = () => {
 
-    const {signInWithGoogle, signInUser} = useContext(AuthContext);
+    const {signInWithGoogle, signInUser} = useAuth();
 
     const navigate = useNavigate();
     const location = useLocation();
