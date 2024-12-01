@@ -14,6 +14,8 @@ const AllJobs = () => {
     const [jobs, setJobs] = useState([]);
     const [filter, setFilter] = useState('');
     const [sort, setSort] = useState('');
+    const [search, setSearch] = useState('');
+    const [searchText, setSearchText] = useState('');
 
 
 
@@ -23,24 +25,32 @@ const AllJobs = () => {
 
     useEffect(() => {
         const getData = async () => {
-            const {data} = await axios(`http://localhost:5000/all-jobs?page=${currentPage}&size=${itemsPerPage}&filter=${filter}&sort=${sort}`)
+            const {data} = await axios(`http://localhost:5000/all-jobs?page=${currentPage}&size=${itemsPerPage}&filter=${filter}&sort=${sort}&search=${search}`)
             setJobs(data)
         }
         getData();
-    }, [currentPage, itemsPerPage, filter, sort])
+    }, [currentPage, itemsPerPage, filter, sort, search])
 
     useEffect(() => {
         const getCount = async () => {
-            const {data} = await axios(`http://localhost:5000/jobs-count?filter=${filter}`)
+            const {data} = await axios(`http://localhost:5000/jobs-count?filter=${filter}&search=${search}`)
             setCount(data.count);
         }
         getCount();
-    }, [filter])
+    }, [filter, search])
 
     const handleReset = () => {
         setFilter('');
         setSort('');
+        setSearchText('');
+        setSearch('');
     }
+
+    const handleSearch = e => {
+        e.preventDefault();
+        setSearch(searchText);
+    }
+
 
     return (
         <div className='py-10 max-w-[90%] xl:max-w-[1200px] mx-auto min-h-[calc(100vh-306px)] flex flex-col justify-between'>
@@ -61,9 +71,11 @@ const AllJobs = () => {
                 </select>
             </div>
 
-            <form>
+            <form onSubmit={handleSearch}>
                 <div className='flex p-1 overflow-hidden border rounded-lg    focus-within:ring focus-within:ring-opacity-40 focus-within:border-blue-400 focus-within:ring-blue-300'>
                 <input
+                    onChange={e => setSearchText(e.target.value)}
+                    value={searchText}
                     className='px-6 py-2 text-gray-700 placeholder-gray-500 bg-white outline-none focus:placeholder-transparent'
                     type='text'
                     name='search'
