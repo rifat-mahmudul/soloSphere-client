@@ -12,6 +12,9 @@ const AllJobs = () => {
     const pages = [...Array(numberOfPages).keys()].map(e => e + 1)
 
     const [jobs, setJobs] = useState([]);
+    const [filter, setFilter] = useState('');
+
+
 
     const handlePagination = value => {
         setCurrentPage(value);
@@ -19,19 +22,19 @@ const AllJobs = () => {
 
     useEffect(() => {
         const getData = async () => {
-            const {data} = await axios(`http://localhost:5000/all-jobs?page=${currentPage}&size=${itemsPerPage}`)
+            const {data} = await axios(`http://localhost:5000/all-jobs?page=${currentPage}&size=${itemsPerPage}&filter=${filter}`)
             setJobs(data)
         }
         getData();
-    }, [currentPage, itemsPerPage])
+    }, [currentPage, itemsPerPage, filter])
 
     useEffect(() => {
         const getCount = async () => {
-            const {data} = await axios('http://localhost:5000/jobs-count')
+            const {data} = await axios(`http://localhost:5000/jobs-count?filter=${filter}`)
             setCount(data.count);
         }
         getCount();
-    }, [])
+    }, [filter])
 
     return (
         <div className='py-10 max-w-[90%] xl:max-w-[1200px] mx-auto min-h-[calc(100vh-306px)] flex flex-col justify-between'>
@@ -39,6 +42,8 @@ const AllJobs = () => {
             <div className='flex flex-col md:flex-row justify-center items-center gap-5 '>
             <div>
                 <select
+                onChange={e => setFilter(e.target.value)}
+                value={filter}
                 name='category'
                 id='category'
                 className='border p-4 rounded-lg'
